@@ -1,0 +1,49 @@
+@charset "ISO-8859-1";
+
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+h3 {
+	text-align: center;
+	margin: 10px 0 5px 0;
+	font-family: cursive;
+	font: bolder;
+	color: black;
+}
+
+button:hover {
+	opacity: 0.8;
+}
+
+/* Add a black background color to the top navigation */
+.menu {
+	background-color: white;
+	overflow: hidden;
+	float: right;
+	width: 100%;
+	margin: 10px 0 5px 0;
+}
+
+/* Style the links inside the navigation bar */
+.menu a {
+	float: right;
+	color: blue;
+	text-align: left;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.menu a:hover {
+	background-color: #0080c0;
+	color: white;
+}
+
+/* Add a color to the active/current link */
+.menu a.active {
+	background-color: #ADD8E6;
+	color: white;
+}

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc.xsd
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<!--Specifying the Resource location to load JS, CSS, Images etc -->
+	<resources mapping="/contents/**" location="/contents/" />
+
+	<!-- Specifying base package of the Components like Controller, Service,DAO -->
+	<context:component-scan
+		base-package="com.hcl.pp" />
+	<annotation-driven />
+
+	<!-- View Resolver -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/jspages/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+
+	<!-- DataSource -->
+	<beans:bean
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		id="dataSource1">
+		<beans:property name="driverClassName"
+			value="com.mysql.cj.jdbc.Driver"></beans:property>
+		<beans:property name="url"
+			value="jdbc:mysql://127.0.0.1:3306/petsdb?autoReconnect=true"></beans:property>
+		<beans:property name="username" value="niharika"></beans:property>
+		<beans:property name="password" value="mysqlpassword"></beans:property>
+	</beans:bean>
+
+	<!-- Hibernate SessionFactory -->
+	<beans:bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource1" />
+		<!-- <property name="configLocation" value="classpath:hibernate.cfg.xml" 
+			/> -->
+		<beans:property name="hibernateProperties">
+			<beans:props>
+				<beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect
+				</beans:prop>
+				<!--<beans:prop key="hibernate.hbm2ddl.auto">update</beans:prop> -->
+				<beans:prop key="hibernate.format_sql">true</beans:prop>
+				<beans:prop key="hibernate.show_sql">true</beans:prop>
+				<beans:prop key="hibernate.enable_lazy_load_no_trans">true</beans:prop>
+			</beans:props>
+		</beans:property>
+		<beans:property name="packagesToScan"
+			value="com.hcl.pp.model"></beans:property>
+	</beans:bean>
+
+	<beans:bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<beans:property name="sessionFactory"
+			ref="sessionFactory" />
+	</beans:bean>
+
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+
+</beans:beans>
